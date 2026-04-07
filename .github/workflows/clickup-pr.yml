@@ -28,6 +28,6 @@ jobs:
             -H "Authorization: ${{ secrets.CLICKUP_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d '{
-              "comment_text": "✅ **Merge Request Approved & Merged!**\n\n\nApproved by: ${{ github.actor }}\n\nTitle: ${{ github.event.pull_request.title }}\n\nLink: ${{ github.event.pull_request.html_url }}\n\n\n---\n*System Note: We survived another merge without breaking the server! 🎉*",
+              "comment_text": "✅ **Merge Request Approved & Merged!**\n\n\nApproved by: ${{ github.actor }}\n\nTitle: ${{ github.event.pull_request.title }}\n\nLink: ${{ github.event.pull_request.html_url }}\n\n\n---\n*System Note: We survived another merge without breaking the server! 🎉 \n -------------------------------------------------------------------*",
               "notify_all": true
             }'
