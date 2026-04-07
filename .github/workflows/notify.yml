@@ -1,41 +1,19 @@
-name: PR Channel Notification
+name: Channel Notification
 
 on:
-  pull_request:
-    types: [opened, closed]
+  push:
 
 jobs:
   notify-channel:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify PR Opened (Junior Action)
-        if: github.event.action == 'opened'
+      - name: Send Message to ClickUp Chat
         run: |
           curl -X POST \
             "https://api.clickup.com/api/v2/view/${{ secrets.CLICKUP_VIEW_ID }}/comment" \
             -H "Authorization: ${{ secrets.CLICKUP_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d '{
-<<<<<<< HEAD
-              "comment_text": "🚨 **New Merge Request!**\n\n\nDeveloper: ${{ github.actor }}\n\nTitle: ${{ github.event.pull_request.title }}\n\nLink: ${{ github.event.pull_request.html_url }}\n\n\n---\n*System Note: Fingers crossed this code actually works. 🤞😅*",
-=======
-              "comment_text": "🚨 **New Merge Request!**\nDeveloper: ${{ github.actor }}\nTitle: ${{ github.event.pull_request.title }}\nLink: ${{ github.event.pull_request.html_url }}\n\n*System Note: Fingers crossed this code actually works. 🤞😅*",
->>>>>>> d45b1230bffcacc6b5853cc33dcbeedebaf9b442
-              "notify_all": true
-            }'
-
-      - name: Notify PR Merged (Senior Action)
-        if: github.event.action == 'closed' && github.event.pull_request.merged == true
-        run: |
-          curl -X POST \
-            "https://api.clickup.com/api/v2/view/${{ secrets.CLICKUP_VIEW_ID }}/comment" \
-            -H "Authorization: ${{ secrets.CLICKUP_API_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-<<<<<<< HEAD
-              "comment_text": "✅ **Merge Request Approved & Merged!**\n\n\nApproved by: ${{ github.actor }}\n\nTitle: ${{ github.event.pull_request.title }}\n\nLink: ${{ github.event.pull_request.html_url }}\n\n\n---\n*System Note: We survived another merge without breaking the server! 🎉*",
-=======
-              "comment_text": "✅ **Merge Request Approved & Merged!**\nApproved by: ${{ github.actor }}\nTitle: ${{ github.event.pull_request.title }}\nLink: ${{ github.event.pull_request.html_url }}\n\n*System Note: We survived another merge without breaking the server! 🎉*",
->>>>>>> d45b1230bffcacc6b5853cc33dcbeedebaf9b442
+              "comment_text": "🚀 **New Code Uploaded**\nDeveloper: ${{ github.actor }}\nBranch: ${{ github.ref_name }}\nLink: ${{ github.event.compare }}\n\n*System Note: Fingers crossed this code actually works and does not break the server. 🤞😅*",
               "notify_all": true
             }'
